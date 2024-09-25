@@ -1,0 +1,167 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+.hero {
+    background: url("{% static 'images/first1.jpg' %}") no-repeat center center / cover;
+    height: 100vh;
+    position: relative;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start; /* Align content to the left */
+    padding: 40px; /* Increased padding for better alignment */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+
+.logo {
+    color: #FF5722;
+    font-size: 28px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu a {
+    color: #FFF;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    max-width: 600px;
+    margin-top: 150px; /* Adjust top margin for spacing */
+}
+
+.subtitle {
+    font-size: 48px;
+    color: #7aff22;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 15px;
+
+}
+
+.subtitle span {
+    color: #FFEB3B;
+}
+
+.university {
+    font-size: 32px;
+    color: #FF5722;
+    font-weight: bold;
+    margin: 10px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.description {
+    color:whitesmoke;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 10px;
+}
+
+.btn {
+    background-color: #ff7322;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 40px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #858f94;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .subtitle {
+        font-size: 36px;
+        padding: 10px;
+    }
+
+    .university {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 18px;
+    }
+
+    nav .menu a {
+        font-size: 16px;
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .subtitle {
+        font-size: 28px;
+    }
+
+    .university {
+        font-size: 20px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav .menu a {
+        margin: 10px 0;
+    }
+} 

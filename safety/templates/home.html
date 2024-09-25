@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Campus Safety Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .hero {
+            background: url("{% static 'images/first1.jpg' %}") no-repeat center center / cover;
+            height: 100vh;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="overlay">
+            <nav>
+                <a href="#" class="logo">Aditya University</a>
+                <div class="menu">
+                    <a href="{% url 'home' %}">HOME</a>
+                    <a href="{% url 'signup' %}">SIGNUP</a>
+                </div>
+            </nav>
+            <div class="main-content">
+                <div class="subtitle">
+                    <span>C</span>ampus <span>S</span>afety <span>H</span>ub
+                </div>
+                <div class="description">
+                    Welcome to the Campus Safety Hub at Aditya University. Our mission is to enhance campus safety through innovative<br> solutions and community engagement. Stay informed and be part of our safety initiatives.
+                </div>
+                <a href="{% url 'signup' %}" class="btn">Let's Get Started</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

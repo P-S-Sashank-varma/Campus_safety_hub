@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Safety Hub - Help</title>
+    <style>
+        /* Your existing styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            align-items: center;
+            background-color: #007BFF;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-group a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .username {
+            font-size: 18px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .profile-details {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: rgb(59, 196, 24);
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            text-align: left;
+            z-index: 1001;
+            overflow: visible;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .selection {
+            margin-bottom: 20px;
+        }
+
+        .selection button {
+            padding: 15px 25px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .selection button:hover {
+            background-color: #0056b3;
+        }
+
+        #actionButtons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .sos-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #FF4C4C;
+            color: white;
+            border: none;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .sos-button:hover {
+            background-color: #cc0000;
+        }
+
+        #timer {
+            margin-top: 20px;
+            font-size: 18px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="icon-group">
+            <a href="{% url 'home' %}">🏠 Home</a>
+        </div>
+        <div class="username">
+            Hello, P S Sashank Varma
+        </div>
+        <div class="profile-icon" onclick="toggleProfile()">
+            <img src="{% static 'images/icon.jpeg' %}" alt="Profile Icon" style="width: 50px; height: 50px;">
+            <div id="profile-details" class="profile-details">
+                <p><strong>Username:</strong> Sashank</p>
+                <p><strong>Email:</strong> sashankvarma920@gmail.com</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>How can I help you?</h2>
+
+        <div class="selection">
+            <button onclick="showOptions('dayScholar')">Day Scholar</button>
+            <button onclick="showOptions('hostel')">Hostel</button>
+        </div>
+
+        <div id="actionButtons" style="display: none;">
+            <button class="sos-button" onclick="startSOS()">SOS</button>
+        </div>
+
+        <div id="timer" style="display: none;">
+            Sending info in <span id="time"></span> seconds...
+        </div>
+    </div>
+
+    <script>
+        let countdown;
+
+        function showOptions(type) {
+            document.getElementById('actionButtons').style.display = 'flex';
+        }
+
+        function startSOS() {
+            const timerDiv = document.getElementById('timer');
+            let timeLeft = 5; // 5 second countdown
+            timerDiv.style.display = 'block';
+            document.getElementById('time').innerText = timeLeft;
+
+            countdown = setInterval(function () {
+                timeLeft--;
+                document.getElementById('time').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+
+                    let latitude = 17.3850;  // Sample latitude
+                    let longitude = 78.4867; // Sample longitude
+
+                    // Hardcoded username and email
+                    let username = "Sashank Varma";
+                    let email = "sashankvarma920@gmail.com";
+
+                    fetch('/sos/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included
+                        },
+                        body: JSON.stringify({
+                            latitude: latitude,
+                            longitude: longitude,
+                            username: username,
+                            email: email
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('SOS sent successfully!');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+
+                    timerDiv.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        function toggleProfile() {
+            const profileDetails = document.getElementById('profile-details');
+            profileDetails.style.display = (profileDetails.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</body>
+
+</html>
